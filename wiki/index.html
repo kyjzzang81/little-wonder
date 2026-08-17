@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="리틀원더의 문제의식, 철학, 경험 설계, 사업 구조를 정리한 편집형 위키" />
+  <title>Little Wonder Wiki</title>
+  <style>
+    :root {
+      --paper: #ffffff;
+      --paper-deep: #f3f7fc;
+      --ink: #15263a;
+      --muted: #657386;
+      --green: #0167d3;
+      --green-light: #e7f1fc;
+      --orange: #f3b806;
+      --orange-light: #fff4cc;
+      --red: #ec2127;
+      --red-light: #fde8e9;
+      --line: #d9e2ed;
+      --white: #ffffff;
+      --shadow: 0 12px 35px rgba(1, 75, 153, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 85% 8%, rgba(243,184,6,.13), transparent 24rem),
+        linear-gradient(90deg, rgba(1,103,211,.025) 1px, transparent 1px),
+        var(--paper);
+      background-size: auto, 32px 32px, auto;
+      font-family: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+      line-height: 1.75;
+      word-break: keep-all;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+    ::selection { background: #f5c7a9; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 24px;
+      color: white;
+      background: rgba(1, 82, 171, .97);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 5px 22px rgba(1, 71, 145, .2);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-right: auto;
+      font-weight: 800;
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      color: #16304c;
+      background: var(--orange);
+      border-radius: 50% 48% 45% 54%;
+      transform: rotate(-5deg);
+      font-family: Georgia, serif;
+      font-size: 20px;
+    }
+
+    .search-wrap { position: relative; width: min(340px, 35vw); }
+    #searchInput {
+      width: 100%;
+      padding: 9px 14px 9px 36px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      color: white;
+      background: rgba(255,255,255,.1);
+      outline: none;
+    }
+    #searchInput::placeholder { color: rgba(255,255,255,.65); }
+    #searchInput:focus { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.55); }
+    .search-icon { position: absolute; left: 13px; top: 9px; opacity: .7; }
+
+    .toolbar { display: flex; gap: 7px; }
+    .toolbar button {
+      min-height: 39px;
+      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 9px;
+      color: white;
+      background: transparent;
+    }
+    .toolbar button:hover { background: rgba(255,255,255,.1); }
+    .toolbar .primary { color: #132a42; background: var(--orange); border-color: var(--orange); font-weight: 750; }
+    .toolbar .research-link { color: white; text-decoration: none; display: inline-flex; align-items: center; min-height: 39px; padding: 7px 12px; border: 1px solid rgba(255,255,255,.22); border-radius: 9px; }
+    .toolbar .research-link:hover { background: rgba(255,255,255,.1); }
+    #saveStatus { min-width: 70px; align-self: center; color: #d8e6de; font-size: 12px; text-align: center; }
+
+    .layout {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 250px minmax(0, 860px) 220px;
+      gap: 34px;
+      padding: 42px 28px 90px;
+    }
+
+    .side, .aside { position: sticky; top: 92px; align-self: start; max-height: calc(100vh - 115px); overflow: auto; }
+    .side-label, .aside-label { margin-bottom: 13px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .13em; }
+    .side nav { display: grid; gap: 4px; }
+    .side a {
+      padding: 8px 12px;
+      border-left: 2px solid transparent;
+      color: #58655d;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .side a:hover, .side a.active { color: var(--green); background: rgba(255,255,255,.45); border-left-color: var(--orange); }
+    .side-note { margin-top: 25px; padding: 16px; border: 1px solid var(--line); border-radius: 13px; color: var(--muted); background: rgba(255,255,255,.42); font-size: 12px; }
+
+    main { min-width: 0; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 52px 54px 48px;
+      border-radius: 4px 44px 4px 44px;
+      color: white;
+      background: var(--green);
+      box-shadow: var(--shadow);
+    }
+    .hero::after {
+      content: "?";
+      position: absolute;
+      right: 28px;
+      bottom: -78px;
+      color: rgba(255,255,255,.075);
+      font-family: Georgia, serif;
+      font-size: 280px;
+      line-height: 1;
+    }
+    .eyebrow { color: #efc474; font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    h1 { position: relative; z-index: 1; margin: 12px 0 15px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(45px, 6vw, 76px); line-height: .98; letter-spacing: -.04em; }
+    .hero p { position: relative; z-index: 1; max-width: 640px; margin: 0; color: #dce8df; font-size: 18px; }
+    .hero .summary { margin-top: 27px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.19); color: white; font-size: 21px; font-weight: 650; }
+
+    .chapter {
+      scroll-margin-top: 90px;
+      margin-top: 70px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .chapter-number { display: inline-block; margin-bottom: 9px; color: var(--orange); font-family: Georgia, serif; font-size: 14px; font-weight: bold; }
+    h2 { margin: 0 0 19px; font-family: Georgia, "Noto Serif KR", serif; font-size: clamp(29px, 4vw, 42px); line-height: 1.25; letter-spacing: -.035em; }
+    h3 { margin: 32px 0 11px; color: var(--green); font-size: 20px; line-height: 1.45; }
+    p { margin: 0 0 17px; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 7px 0; }
+    strong { color: #173f30; }
+
+    .lead { color: #33453b; font-size: 19px; }
+    .callout {
+      margin: 25px 0;
+      padding: 22px 25px;
+      border-left: 5px solid var(--orange);
+      background: var(--white);
+      box-shadow: 0 6px 20px rgba(35,54,42,.055);
+      font-size: 18px;
+    }
+    .callout.green { border-color: var(--green); background: var(--green-light); }
+    .small { color: var(--muted); font-size: 13px; }
+
+    .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 23px 0; }
+    .card { padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255,253,248,.76); }
+    .card b { display: block; margin-bottom: 7px; color: var(--green); }
+    .card p { margin: 0; color: #526058; font-size: 14px; }
+    .pill { display: inline-block; margin: 2px 4px 2px 0; padding: 4px 10px; border-radius: 999px; color: #7a5900; background: var(--orange-light); font-size: 12px; font-weight: 700; }
+    .pill.red { color: #a31217; background: var(--red-light); }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 9px;
+      margin: 24px 0;
+      padding: 20px;
+      border: 1px dashed #94bce7;
+      border-radius: 14px;
+      background: rgba(220,232,216,.35);
+    }
+    .flow span { padding: 7px 11px; border-radius: 8px; background: var(--green); color: white; font-weight: 700; font-size: 13px; }
+    .flow i { color: var(--orange); font-style: normal; font-weight: bold; }
+
+    table { width: 100%; margin: 22px 0; border-collapse: collapse; background: rgba(255,255,255,.38); font-size: 14px; }
+    th, td { padding: 13px 12px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+    th { color: var(--green); background: rgba(220,232,216,.55); }
+
+    .aside-card { margin-bottom: 14px; padding: 16px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.48); }
+    .aside-card b { display: block; margin-bottom: 8px; color: var(--green); font-size: 13px; }
+    .aside-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+    .editable[contenteditable="true"] {
+      outline: 2px dashed rgba(243,184,6,.62);
+      outline-offset: 8px;
+      border-radius: 3px;
+      background: rgba(255,255,255,.24);
+    }
+    .editable[contenteditable="true"]:focus { outline-color: var(--orange); background: rgba(255,255,255,.65); }
+    body.editing .chapter:hover::after {
+      content: "편집 중";
+      float: right;
+      margin-top: -35px;
+      color: var(--orange);
+      font-size: 11px;
+    }
+    mark { padding: 1px 2px; color: inherit; background: #ffe17a; }
+    .search-empty { display: none; margin: 20px 0; padding: 15px; border-radius: 10px; background: var(--orange-light); }
+
+    .footer { margin-top: 60px; padding-top: 22px; color: var(--muted); font-size: 12px; }
+    .mobile-nav { display: none; }
+
+    @media (max-width: 1120px) {
+      .layout { grid-template-columns: 210px minmax(0, 1fr); }
+      .aside { display: none; }
+    }
+    @media (max-width: 780px) {
+      .topbar { flex-wrap: wrap; padding: 10px 14px; }
+      .brand { width: calc(100% - 45px); }
+      .search-wrap { order: 3; width: 100%; }
+      .toolbar { margin-left: auto; }
+      .toolbar button:not(.primary) { display: none; }
+      #saveStatus { display: none; }
+      .layout { display: block; padding: 22px 15px 65px; }
+      .side { display: none; }
+      .mobile-nav { display: block; width: 100%; margin-bottom: 16px; padding: 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--white); }
+      .hero { padding: 39px 27px; border-radius: 3px 28px 3px 28px; }
+      .hero p { font-size: 16px; }
+      .hero .summary { font-size: 18px; }
+      .chapter { margin-top: 52px; }
+      .cards { grid-template-columns: 1fr; }
+      table { display: block; overflow-x: auto; white-space: nowrap; }
+    }
+    @media print {
+      .topbar, .side, .aside, .mobile-nav { display: none !important; }
+      body { background: white; }
+      .layout { display: block; width: 100%; padding: 0; }
+      .hero { box-shadow: none; }
+      .chapter { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">W</span> LITTLE WONDER WIKI</div>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input id="searchInput" type="search" placeholder="위키에서 검색" aria-label="위키 검색" />
+    </div>
+    <span id="saveStatus">저장됨</span>
+    <div class="toolbar">
+      <a class="research-link" href="research/index.html">자료 라이브러리</a>
+      <button id="exportBtn" title="현재 내용을 새 HTML 파일로 저장">내보내기</button>
+      <button id="resetBtn" title="처음 문서로 되돌리기">초기화</button>
+      <button id="editBtn" class="primary">편집하기</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="side">
+      <div class="side-label">CONTENTS</div>
+      <nav id="toc">
+        <a href="#definition">정의와 존재 이유</a>
+        <a href="#problem">해결하려는 문제</a>
+        <a href="#promise">브랜드의 약속</a>
+        <a href="#experience">경험 설계 원칙</a>
+        <a href="#journey">Explorer Journey</a>
+        <a href="#product">제품과 사업 구조</a>
+        <a href="#competition">경쟁과 차별화</a>
+        <a href="#system">핵심 자산과 시스템</a>
+        <a href="#validation">검증할 가설</a>
+        <a href="#glossary">용어집</a>
+      </nav>
+      <div class="side-note">상단의 <b>편집하기</b>를 누르면 본문을 직접 수정할 수 있습니다. 수정 내용은 이 브라우저에 자동 저장됩니다.</div>
+    </aside>
+
+    <main>
+      <select class="mobile-nav" id="mobileNav" aria-label="문서 목차">
+        <option value="">목차에서 이동…</option>
+        <option value="#definition">정의와 존재 이유</option>
+        <option value="#problem">해결하려는 문제</option>
+        <option value="#promise">브랜드의 약속</option>
+        <option value="#experience">경험 설계 원칙</option>
+        <option value="#journey">Explorer Journey</option>
+        <option value="#product">제품과 사업 구조</option>
+        <option value="#competition">경쟁과 차별화</option>
+        <option value="#system">핵심 자산과 시스템</option>
+        <option value="#validation">검증할 가설</option>
+        <option value="#glossary">용어집</option>
+      </select>
+
+      <section class="hero editable">
+        <div class="eyebrow">Adventure Education for Children</div>
+        <h1>Little<br />Wonder</h1>
+        <p>아이에게 정답을 알려주는 대신, 스스로 세상을 발견하고 질문하고 시도할 기회를 만듭니다.</p>
+        <p class="summary">리틀원더는 아이를 수동적인 참가자에서 자기 삶의 Explorer로 바꾸는 Adventure Education Company입니다.</p>
+      </section>
+
+      <div id="searchEmpty" class="search-empty">검색어와 일치하는 문단을 찾지 못했습니다.</div>
+
+      <article id="wikiContent">
+        <section class="chapter editable" id="definition">
+          <span class="chapter-number">01</span>
+          <h2>정의와 존재 이유</h2>
+          <p class="lead">리틀원더는 키트 회사도, 일회성 체험 회사도, 장소를 게임화하는 제작사도 아니다. 아이가 실제 세계에서 스스로 관찰하고 선택하고 질문하고 도전하도록 만드는 <strong>Adventure Education IP</strong>를 개발하고, 가정·학교·지역·문화공간에 유통하는 회사다.</p>
+          <div class="callout">“아이들이 방문하는 공간을 탐험하는 공간으로 바꾸고, 흩어진 경험을 한 아이의 성장 Journey로 연결한다.”</div>
+          <h3>리틀원더가 파는 것</h3>
+          <p>부모가 구매하는 것은 키트나 숲 체험 그 자체가 아니다. “우리 아이가 어떤 아이로 자라기를 원하는가”라는 열망이다. 영어학원이 영어를 잘하는 아이, 태권도장이 건강하고 자신감 있는 아이를 약속한다면 리틀원더는 <strong>세상을 궁금해하고 스스로 탐험하는 아이</strong>를 약속한다.</p>
+          <div class="cards">
+            <div class="card"><b>문제</b><p>자기주도적 현실세계 탐색 경험의 공백</p></div>
+            <div class="card"><b>변화</b><p>선택·관찰·질문·시도·재도전 경험의 증가</p></div>
+            <div class="card"><b>상품</b><p>지속적으로 성장하는 Explorer Journey</p></div>
+            <div class="card"><b>전달 방식</b><p>Club · School · Place · Home · Passport</p></div>
+          </div>
+          <h3>Brand Colors</h3>
+          <table>
+            <thead><tr><th>역할</th><th>이름</th><th>HEX</th><th>권장 용도</th></tr></thead>
+            <tbody>
+              <tr><td>Primary</td><td><span style="display:inline-block;width:12px;height:12px;margin-right:7px;border-radius:50%;background:#0167D3"></span>Wonder Blue</td><td>#0167D3</td><td>로고의 wonder, 주요 제목, 핵심 버튼, 링크와 브랜드 면</td></tr>
+              <tr><td>Secondary</td><td><span style="display:inline-block;width:12px;height:12px;margin-right:7px;border-radius:50%;background:#F3B806"></span>Wonder Yellow</td><td>#F3B806</td><td>별과 p, 발견·축하·진행을 나타내는 작은 강조</td></tr>
+              <tr><td>Third</td><td><span style="display:inline-block;width:12px;height:12px;margin-right:7px;border-radius:50%;background:#EC2127"></span>Wonder Red</td><td>#EC2127</td><td>로고의 in, 중요한 배지와 짧은 강조</td></tr>
+              <tr><td>Background</td><td><span style="display:inline-block;width:12px;height:12px;margin-right:7px;border:1px solid #d9e2ed;border-radius:50%;background:#FFFFFF"></span>White</td><td>#FFFFFF</td><td>기본 화면과 문서 배경</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="chapter editable" id="problem">
+          <span class="chapter-number">02</span>
+          <h2>해결하려는 문제</h2>
+          <p class="lead">한국의 아동기는 점점 더 ‘정답이 정해진 시간’으로 채워지고 있다. 아이가 스스로 무엇을 할지 선택하고, 주변 세계를 탐색하고, 실패하고 다시 시도하며 발견하는 시간과 기회가 구조적으로 부족하다.</p>
+          <h3>문제의 정확한 이름</h3>
+          <p><span class="pill">Exploration Gap</span><span class="pill">Childhood Experience Gap</span><span class="pill">자기주도적 경험의 공백</span></p>
+          <p>‘호기심 부족’이나 ‘창의성 부족’은 문제 정의로 적절하지 않다. 호기심·탐구성·모험성은 리틀원더가 만들고 싶은 결과에 가깝고, 아이 개인을 결핍의 대상으로 규정해서도 안 된다. 문제는 아이가 아니라 아이를 둘러싼 시간과 환경의 구조에 있다.</p>
+          <table>
+            <thead><tr><th>구조적 변화</th><th>발생한 공백</th><th>아이에게 부족한 것</th><th>리틀원더의 개입</th></tr></thead>
+            <tbody><tr><td>사교육과 성인 주도 일정의 증가</td><td>자기주도적 경험의 공백</td><td>스스로 선택하고 탐색할 시간과 환경</td><td>선택·질문·시행착오가 있는 Adventure</td></tr></tbody>
+          </table>
+          <h3>관찰된 사회적 신호</h3>
+          <ul>
+            <li>아이들이 희망하는 방과 후 놀이와 실제 일상 사이에 큰 격차가 존재한다.</li>
+            <li>학원, 학교, 체험 프로그램 등 아이의 일상 대부분이 성인에 의해 설계되어 있다.</li>
+            <li>아이는 계속 participant가 되지만 explorer가 될 기회는 줄어든다.</li>
+            <li>디지털 여가의 증가는 문제 자체라기보다 현실세계 탐색이 줄어드는 현상 중 하나다.</li>
+          </ul>
+          <div class="callout green"><strong>방어 가능한 주장</strong><br />한국 아이들이 원하는 놀이와 탐색의 시간과 실제 일상 사이에는 큰 격차가 있다.</div>
+        </section>
+
+        <section class="chapter editable" id="promise">
+          <span class="chapter-number">03</span>
+          <h2>브랜드의 약속</h2>
+          <p class="lead">리틀원더는 아이에게 ‘무엇을 배웠는가’보다 ‘어떻게 세상을 대하게 되었는가’가 남는 경험을 만든다.</p>
+          <h3>3년 뒤 아이에게 남아야 하는 것</h3>
+          <p>처음 보는 것에 다가가고, 유심히 보고, 자기 질문을 만들고, 알아볼 방법을 선택하고, 실패해도 방법을 바꾸어 다시 시도하는 태도다. 리틀원더의 약속은 일회성 재미가 아니라 이런 행동이 반복을 통해 아이의 자연스러운 방식이 되는 것이다.</p>
+          <div class="callout">좋은 리틀원더 경험이 끝났을 때 아이가 “정답 맞혔어!”보다 “그런데 왜 그런 거야?”라고 말한다면 성공에 가깝다.</div>
+          <h3>변화의 논리</h3>
+          <div class="flow"><span>성인 주도 일정</span><i>→</i><span>Adventure 개입</span><i>→</i><span>자기주도 탐색 증가</span><i>→</i><span>호기심·도전·자기효능감</span></div>
+          <p class="small">리틀원더는 발달 효과를 과장하거나 아이의 성향을 진단하지 않는다. 실제로 관찰된 행동의 변화만 기록하고 전달한다.</p>
+        </section>
+
+        <section class="chapter editable" id="experience">
+          <span class="chapter-number">04</span>
+          <h2>경험 설계 원칙</h2>
+          <p class="lead">콘텐츠가 아이를 끌고 가는 것이 아니라, 점점 뒤로 물러나 아이가 앞으로 나오게 한다.</p>
+          <h3>Little Wonder Loop™</h3>
+          <div class="flow"><span>DISCOVER<br />발견</span><i>→</i><span>CHOOSE<br />선택</span><i>→</i><span>WONDER<br />질문</span><i>→</i><span>TRY<br />시도</span><i>→</i><span>CHALLENGE<br />재도전</span><i>→</i><span>REFLECT<br />성찰</span></div>
+          <table>
+            <thead><tr><th>단계</th><th>아이의 행동</th><th>대표 질문</th></tr></thead>
+            <tbody>
+              <tr><td>Discover</td><td>환경에서 낯설거나 흥미로운 것을 발견한다.</td><td>“이상한 것을 찾아봐.”</td></tr>
+              <tr><td>Choose</td><td>무엇을 더 탐색할지 스스로 고른다.</td><td>“무엇을 더 알아볼래?”</td></tr>
+              <tr><td>Wonder</td><td>자기만의 질문이나 예상·가설을 만든다.</td><td>“뭐가 궁금해?”</td></tr>
+              <tr><td>Try</td><td>알아볼 방법을 정하고 직접 확인한다.</td><td>“어떻게 알아볼 수 있을까?”</td></tr>
+              <tr><td>Challenge</td><td>예상 밖 결과나 실패 뒤 방법을 바꿔본다.</td><td>“다른 방법은 없을까?”</td></tr>
+              <tr><td>Reflect</td><td>생각의 변화와 아직 남은 궁금증을 표현한다.</td><td>“오늘 무엇이 달라졌어?”</td></tr>
+            </tbody>
+          </table>
+          <h3>경험의 비협상 원칙</h3>
+          <ul>
+            <li><strong>아이가 관찰 대상을 고른다.</strong> “이 나뭇잎을 보세요”보다 “네가 관찰할 것을 골라”에 가깝다.</li>
+            <li><strong>정답을 바로 알려주지 않는다.</strong> 질문 뒤에는 설명보다 “어떻게 알아볼 수 있을까?”가 온다.</li>
+            <li><strong>기록하되 채점하지 않는다.</strong> 아이의 가설은 맞고 틀린 답이 아니라 그 순간의 생각이다.</li>
+            <li><strong>실패와 수정이 실제로 일어난다.</strong> 성공하도록 짜인 만들기는 Challenge가 아니다.</li>
+            <li><strong>마지막에는 시스템이 물러난다.</strong> 자유탐험과 아이가 직접 만드는 미션을 포함한다.</li>
+            <li><strong>Screen → World.</strong> 앱의 모든 상호작용은 아이의 시선을 현실세계로 되돌린다.</li>
+          </ul>
+          <h3>Guide의 역할</h3>
+          <p><strong>Teach가 아니라 Trigger · Observe · Ask · Withdraw.</strong> 부모, 강사, 교사, 숲해설가, 앱 누구든 같은 Exploration Protocol을 따른다. 아이가 막힐 때도 개입은 열린 질문에서 시작해 행동 힌트, 주의 단서, 제한된 선택지 순으로 점진적으로 제공한다.</p>
+        </section>
+
+        <section class="chapter editable" id="journey">
+          <span class="chapter-number">05</span>
+          <h2>Explorer Journey</h2>
+          <p class="lead">리틀원더는 하나의 ‘미션’을 판매하는 대신, 아이가 여러 환경을 오가며 성장하는 Journey를 제공한다.</p>
+          <div class="flow"><span>Observer</span><i>→</i><span>Questioner</span><i>→</i><span>Investigator</span><i>→</i><span>Challenger</span><i>→</i><span>Creator</span><i>→</i><span>Pathfinder</span></div>
+          <div class="cards">
+            <div class="card"><b>Observer</b><p>그냥 지나치던 것을 자세히 보고 차이를 발견한다.</p></div>
+            <div class="card"><b>Questioner</b><p>자기가 발견한 것에서 궁금한 점을 만든다.</p></div>
+            <div class="card"><b>Investigator</b><p>비교하고 예상하며 자기 생각을 확인한다.</p></div>
+            <div class="card"><b>Challenger</b><p>실패한 뒤 방법을 바꾸고 다시 시도한다.</p></div>
+            <div class="card"><b>Creator</b><p>자기 기준과 해결방법, 새로운 미션을 만든다.</p></div>
+            <div class="card"><b>Pathfinder</b><p>스스로 탐험을 설계하고 다른 사람을 이끈다.</p></div>
+          </div>
+          <h3>Passport의 역할</h3>
+          <ul>
+            <li>Club, 학교, 문화센터, 숲, 박물관, 여행, 가정의 경험을 한 아이에게 누적한다.</li>
+            <li>배지는 결과가 아니라 관찰·질문·재시도 등 아이가 실제로 보인 행동에 따라 제공한다.</li>
+            <li>Wonder Journal에는 아이가 만든 질문과 생각의 변화가 쌓인다.</li>
+            <li>다음 Adventure는 장소가 아니라 아이가 이어서 경험할 행동과 Journey를 기준으로 추천한다.</li>
+          </ul>
+          <h3>부모가 받는 Growth Story</h3>
+          <p>“오늘 재미있게 놀았습니다”가 아니라 아이가 무엇을 발견했고, 처음에는 어떻게 생각했으며, 어떤 선택과 시도를 거쳐 생각을 바꾸었는지를 서사로 전달한다. 호기심 82점, 창의성 상위 15% 같은 진단은 하지 않는다.</p>
+        </section>
+
+        <section class="chapter editable" id="product">
+          <span class="chapter-number">06</span>
+          <h2>제품과 사업 구조</h2>
+          <p class="lead">하나의 Adventure IP를 만들고, 여러 채널의 상황에 맞게 변환하여 반복 유통한다. 키트는 사업의 본체가 아니라 필요할 때 붙는 전달 매체다.</p>
+          <h3>Hero Product — Explorer Club</h3>
+          <p>매주 정해진 시간에 고정 멤버가 숲·시장·공원·박물관·동네 등 서로 다른 세계를 탐험하는 정기 프로그램이다. “이번 주말 어디 가지?”라는 일회성 여가 선택이 아니라 “매주 토요일은 리틀원더에 가는 날”이라는 생활 리듬을 만든다.</p>
+          <table>
+            <thead><tr><th>영역</th><th>고객</th><th>상품</th><th>역할</th></tr></thead>
+            <tbody>
+              <tr><td>Club</td><td>부모와 아이</td><td>정기 Explorer Journey</td><td>핵심 수요와 반복 결제 검증</td></tr>
+              <tr><td>Education</td><td>늘봄·학교·문화센터</td><td>표준 Curriculum License</td><td>반복 계약과 대규모 유통</td></tr>
+              <tr><td>Place</td><td>숲·박물관·리조트·시설</td><td>검증된 장소형 커리큘럼</td><td>기존 공간을 탐험 환경으로 전환</td></tr>
+              <tr><td>Home</td><td>가족</td><td>Self-guided Adventure</td><td>브랜드 경험과 초기 데이터 확보</td></tr>
+              <tr><td>Partner</td><td>교육자·지역 운영자</td><td>Leader 교육과 Club License</td><td>직접 고용 없는 지역 확장</td></tr>
+              <tr><td>Support</td><td>모든 채널</td><td>Passport · Cards · Kit</td><td>기록과 실행 보조</td></tr>
+            </tbody>
+          </table>
+          <h3>하나의 IP를 여러 번 판매한다</h3>
+          <p>예를 들어 《곤충 탐정》은 부모용 Self Adventure, 곤충 관찰 팩, 늘봄 4주 과정, 문화센터 수업, 유아숲 프로그램, 리조트 Summer Quest로 전환할 수 있다. 콘텐츠 개발은 한 번이지만 채널별로 반복 활용된다.</p>
+          <div class="callout green"><strong>기관 사업의 원칙</strong><br />맞춤형 공간 콘텐츠 제작 대행이 아니라, 검증되고 연령별로 구조화된 아동 탐색 커리큘럼의 라이선스 사업이어야 한다.</div>
+          <h3>의도적으로 뒤로 미루는 사업</h3>
+          <p>직영학원, 자체 Adventure Park, 대규모 현장체험학습 운영, 공간 프랜차이즈, 장소별 게임 앱은 초기 우선순위가 아니다. 임대료·인력·안전·수주 의존도를 높이거나 기존 강자와 불필요한 정면 경쟁을 만들기 때문이다.</p>
+        </section>
+
+        <section class="chapter editable" id="competition">
+          <span class="chapter-number">07</span>
+          <h2>경쟁과 차별화</h2>
+          <p class="lead">장소나 포맷에는 이미 경쟁자가 있다. 리틀원더의 차별화는 ‘무엇을 하느냐’보다 ‘그 경험에서 아이에게 얼마만큼의 주도권을 돌려주느냐’에 있다.</p>
+          <table>
+            <thead><tr><th>구분</th><th>플레이어블 공간</th><th>현장 교육</th><th>Little Wonder</th></tr></thead>
+            <tbody>
+              <tr><td>핵심 가치</td><td>몰입·재미·집객</td><td>지식·체험학습</td><td>아이의 탐색 Agency</td></tr>
+              <tr><td>설계 단위</td><td>장소별 게임</td><td>클래스</td><td>Explorer Journey</td></tr>
+              <tr><td>기본 구조</td><td>스토리→단서→정답</td><td>설명→관찰→학습</td><td>발견→질문→시도→수정</td></tr>
+              <tr><td>반복 이유</td><td>새로운 콘텐츠</td><td>새로운 지식</td><td>행동의 성장과 레벨업</td></tr>
+              <tr><td>앱 역할</td><td>게임 실행</td><td>LMS·관리</td><td>Passport·질문·성장기록</td></tr>
+              <tr><td>B2B 모델</td><td>맞춤 제작</td><td>교육 프로그램</td><td>교육 IP 라이선스</td></tr>
+            </tbody>
+          </table>
+          <h3>가장 중요한 설계 차이</h3>
+          <div class="cards">
+            <div class="card"><b>Designed Problem → Player Solution</b><p>제작자가 문제와 답을 정하고, 이용자가 정답을 찾아간다.</p></div>
+            <div class="card"><b>Designed Trigger → Child Discovery</b><p>제작자는 계기를 만들고, 아이가 자기 발견과 질문을 만든다.</p></div>
+          </div>
+          <p>“우리는 호기심을 길러준다”는 말만으로는 경쟁우위가 되지 않는다. 철학이 커리큘럼, Guide 행동, 콘텐츠 검수 기준, 배지, 부모 피드백에 일관되게 구현될 때 비로소 복제하기 어려운 시스템이 된다.</p>
+        </section>
+
+        <section class="chapter editable" id="system">
+          <span class="chapter-number">08</span>
+          <h2>핵심 자산과 시스템</h2>
+          <p class="lead">리틀원더의 진짜 해자는 콘텐츠 몇 개가 아니라, 누가 만들어도 리틀원더다운 경험을 생산하고 검증하는 시스템이다.</p>
+          <div class="cards">
+            <div class="card"><b>Adventure Design System</b><p>선택, 열린 질문, 실패, 자유탐험 등 모든 콘텐츠가 따라야 할 경험 규칙.</p></div>
+            <div class="card"><b>Explorer Growth Framework</b><p>연령과 Journey 단계별로 어떤 탐색 행동을 경험하게 할지 정의하는 체계.</p></div>
+            <div class="card"><b>Adventure IP Library</b><p>자연·과학·도시·역사·예술·생활을 아우르는 재사용 가능한 콘텐츠 자산.</p></div>
+            <div class="card"><b>Passport & Badge</b><p>여러 채널의 경험을 연결하고 반복 참여의 이유를 만드는 공통 기록 체계.</p></div>
+          </div>
+          <h3>Little Wonder Adventure Builder</h3>
+          <p>Big Question, 현상, 장소 또는 사물에서 출발해 기획자를 단계별로 안내하고, 리틀원더 철학에 맞는지 자동 검수하며, 현장 테스트 결과까지 관리하는 내부 제작 도구다.</p>
+          <div class="flow"><span>IDEA</span><i>→</i><span>FIT CHECK</span><i>→</i><span>ARCHETYPE</span><i>→</i><span>JOURNEY</span><i>→</i><span>BRANCH</span><i>→</i><span>QUALITY</span><i>→</i><span>FIELD TEST</span><i>→</i><span>PUBLISH</span></div>
+          <h3>Builder가 확인해야 할 것</h3>
+          <ul>
+            <li>아이가 실제로 결정하는 순간이 두 번 이상 존재하는가?</li>
+            <li>아이가 자기 질문과 예상·가설을 만들 수 있는가?</li>
+            <li>정답이 하나로 정해져 있지 않고 여러 해결방법이 가능한가?</li>
+            <li>예상 밖 결과와 생산적인 실패, 수정할 시간이 있는가?</li>
+            <li>성인의 질문이 아니라 아이의 자발적인 발화가 기록되는가?</li>
+            <li>화면 상호작용이 현실세계 관찰을 방해하지 않는가?</li>
+            <li>부모에게 전달할 생각의 변화 Evidence가 존재하는가?</li>
+            <li>현장에서 안전하고 현실적으로 운영 가능한가?</li>
+          </ul>
+          <h3>AI의 적절한 역할</h3>
+          <p>AI는 Adventure를 전부 대신 만드는 작가보다 Critic, Suggestor, Red Team, 예상 발화·분기 생성기, 연령·채널 변환기로 사용한다. 콘텐츠의 독창성과 현장성에 대한 최종 판단은 사람과 실제 아이의 테스트가 맡는다.</p>
+        </section>
+
+        <section class="chapter editable" id="validation">
+          <span class="chapter-number">09</span>
+          <h2>아직 검증할 가설</h2>
+          <p class="lead">철학과 전략은 가설이다. 실제 아이의 행동, 부모의 반복 지불, 운영자의 실행 가능성으로 확인되어야 한다.</p>
+          <div class="cards">
+            <div class="card"><b>부모 수요</b><p>부모는 ‘호기심’이라는 추상적 가치가 아니라 정기적인 Explorer Journey에 반복 지불하는가?</p></div>
+            <div class="card"><b>아이 경험</b><p>활동이 자발적 발견·질문·선택·재시도를 실제로 더 많이 일으키는가?</p></div>
+            <div class="card"><b>Club 단위경제</b><p>적정 정원, 회차, 가격, 장소 이동 범위와 Leader 운영 모델은 무엇인가?</p></div>
+            <div class="card"><b>기관 실행성</b><p>외부 강사가 아닌 교사와 시설 운영자도 품질을 유지하며 실행할 수 있는가?</p></div>
+            <div class="card"><b>성장 체계</b><p>Explorer 단계와 배지가 아이에게는 즐겁고 부모에게는 납득 가능하며 과도한 평가가 되지 않는가?</p></div>
+            <div class="card"><b>Passport 시점</b><p>디지털 제품이 언제부터 반복 경험을 강화하며, 언제까지 종이 기록으로 충분한가?</p></div>
+          </div>
+          <h3>초기 행동지표 후보</h3>
+          <p><span class="pill">자발적 발견 수</span><span class="pill">아이 질문 생성</span><span class="pill">스스로 선택한 활동 비율</span><span class="pill">재시도</span><span class="pill">자유탐험 지속시간</span><span class="pill">다음 참여 의향</span></p>
+          <p>미션 완료율이나 정답률만으로는 리틀원더 경험의 품질을 판단할 수 없다. 현장 기록은 아이가 얼마나 오래 보고, 스스로 방향을 바꾸고, 새로운 질문을 남겼는지를 포착해야 한다.</p>
+        </section>
+
+        <section class="chapter editable" id="glossary">
+          <span class="chapter-number">10</span>
+          <h2>용어집</h2>
+          <table>
+            <tbody>
+              <tr><th>Adventure</th><td>아이의 선택·관찰·질문·시도·실패·성찰이 포함된 현실세계 탐색 경험.</td></tr>
+              <tr><th>Agency</th><td>아이가 무엇을, 어떻게, 얼마나 탐색할지 실제로 결정하는 주도권.</td></tr>
+              <tr><th>Explorer Journey</th><td>서로 다른 장소와 채널의 Adventure가 한 아이에게 누적되는 장기 성장 여정.</td></tr>
+              <tr><th>Wonder Question</th><td>성인이 던진 문제가 아니라 아이가 발견에서 스스로 만든 질문.</td></tr>
+              <tr><th>Guide</th><td>가르치기보다 계기를 제공하고 관찰하고 질문한 뒤 물러나는 사람 또는 앱.</td></tr>
+              <tr><th>Growth Story</th><td>점수나 진단 대신 아이의 관찰된 행동과 생각의 변화를 부모에게 보여주는 기록.</td></tr>
+              <tr><th>Adventure Builder</th><td>리틀원더다운 콘텐츠를 설계·검수·테스트·개선하기 위한 내부 제작 시스템.</td></tr>
+              <tr><th>Productized Curriculum</th><td>기관별 일회성 외주가 아니라 반복 도입 가능한 표준화된 교육 IP.</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </article>
+
+      <footer class="footer editable">
+        <p>Little Wonder Wiki · Working document</p>
+        <p>이 문서는 리틀원더의 현재 방향을 설명하는 살아 있는 문서입니다. 현장 검증과 사업 학습에 따라 계속 수정됩니다.</p>
+      </footer>
+    </main>
+
+    <aside class="aside">
+      <div class="aside-label">AT A GLANCE</div>
+      <div class="aside-card"><b>ONE LINE</b><p>아이를 Explorer로 만드는 Adventure Education Company</p></div>
+      <div class="aside-card"><b>CORE PROBLEM</b><p>자기주도적 현실세계 경험의 공백</p></div>
+      <div class="aside-card"><b>HERO PRODUCT</b><p>Little Wonder Explorer Club</p></div>
+      <div class="aside-card"><b>CORE LOOP</b><p>Discover → Choose → Wonder → Try → Challenge → Reflect</p></div>
+      <div class="aside-card"><b>MOAT</b><p>Design System + Growth Framework + IP Library + Passport</p></div>
+    </aside>
+  </div>
+
+  <script>
+    (() => {
+      const STORAGE_KEY = 'little-wonder-wiki-v1';
+      const content = document.getElementById('wikiContent');
+      const editables = [...document.querySelectorAll('.editable')];
+      const editBtn = document.getElementById('editBtn');
+      const exportBtn = document.getElementById('exportBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const saveStatus = document.getElementById('saveStatus');
+      const searchInput = document.getElementById('searchInput');
+      const searchEmpty = document.getElementById('searchEmpty');
+      let editing = false;
+      let saveTimer;
+
+      const original = editables.map(el => el.innerHTML);
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          JSON.parse(saved).forEach((html, i) => { if (editables[i] && html != null) editables[i].innerHTML = html; });
+        } catch (_) { /* 손상된 로컬 저장값은 무시 */ }
+      }
+
+      function setEditing(on) {
+        editing = on;
+        document.body.classList.toggle('editing', on);
+        editables.forEach(el => el.contentEditable = on ? 'true' : 'false');
+        editBtn.textContent = on ? '편집 완료' : '편집하기';
+        editBtn.setAttribute('aria-pressed', String(on));
+        if (!on) save();
+      }
+
+      function save() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(editables.map(el => el.innerHTML)));
+        saveStatus.textContent = '저장됨';
+      }
+
+      function scheduleSave() {
+        saveStatus.textContent = '저장 중…';
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(save, 500);
+      }
+
+      editBtn.addEventListener('click', () => setEditing(!editing));
+      editables.forEach(el => el.addEventListener('input', scheduleSave));
+
+      resetBtn.addEventListener('click', () => {
+        if (!confirm('브라우저에 저장된 수정 내용을 지우고 처음 문서로 되돌릴까요?')) return;
+        original.forEach((html, i) => editables[i].innerHTML = html);
+        localStorage.removeItem(STORAGE_KEY);
+        saveStatus.textContent = '초기화됨';
+      });
+
+      exportBtn.addEventListener('click', () => {
+        if (editing) setEditing(false);
+        const clone = document.documentElement.cloneNode(true);
+        clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+        const blob = new Blob(['<!doctype html>\n' + clone.outerHTML], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'little-wonder-wiki.html';
+        link.click();
+        URL.revokeObjectURL(url);
+        saveStatus.textContent = '내보냄';
+      });
+
+      const walkerTargets = () => [...content.querySelectorAll('h2,h3,p,li,td,th')];
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.trim();
+        document.querySelectorAll('mark[data-search]').forEach(mark => mark.replaceWith(document.createTextNode(mark.textContent)));
+        if (!query) { searchEmpty.style.display = 'none'; return; }
+        let count = 0;
+        const safe = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(safe, 'gi');
+        walkerTargets().forEach(el => {
+          [...el.childNodes].filter(n => n.nodeType === Node.TEXT_NODE).forEach(node => {
+            if (!regex.test(node.textContent)) { regex.lastIndex = 0; return; }
+            regex.lastIndex = 0;
+            const frag = document.createDocumentFragment();
+            let last = 0;
+            node.textContent.replace(regex, (match, offset) => {
+              frag.append(node.textContent.slice(last, offset));
+              const mark = document.createElement('mark');
+              mark.dataset.search = 'true';
+              mark.textContent = match;
+              frag.append(mark);
+              last = offset + match.length;
+              count++;
+            });
+            frag.append(node.textContent.slice(last));
+            node.replaceWith(frag);
+          });
+        });
+        searchEmpty.style.display = count ? 'none' : 'block';
+        document.querySelector('mark[data-search]')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      document.getElementById('mobileNav').addEventListener('change', e => {
+        if (e.target.value) document.querySelector(e.target.value)?.scrollIntoView({ behavior: 'smooth' });
+      });
+
+      const links = [...document.querySelectorAll('#toc a')];
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+          }
+        });
+      }, { rootMargin: '-25% 0px -65% 0px' });
+      document.querySelectorAll('.chapter').forEach(section => observer.observe(section));
+
+      window.addEventListener('beforeunload', save);
+    })();
+  </script>
+</body>
+</html>
