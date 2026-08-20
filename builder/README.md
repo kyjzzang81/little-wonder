@@ -16,3 +16,14 @@
 `AI Design Critic`과 입력 보조는 현재 리틀원더의 명시적 설계 규칙을 기반으로 한 안전한 폴백을 제공합니다. 각 제안은 자동 반영되지 않으며, 기획자가 검토한 뒤 적용하거나 직접 수정할 수 있습니다.
 
 실제 LLM을 연결할 때는 브라우저에 API 키를 넣지 않고, 서버 측 비밀 환경변수와 `/api/llm-assist` 프록시를 사용해야 합니다. 이 엔드포인트는 `type`과 `adventure`를 받아 `{ "title": "제안 제목", "suggestion": "제안 문장", "target": "question" }` 형식으로 반환하면 됩니다. 응답이 없거나 연결할 수 없을 때에는 로컬 폴백 제안이 표시됩니다.
+
+## 개발
+
+저장소 루트에서 의존성을 설치한 뒤 실행합니다.
+
+```bash
+npm install
+npm run dev:builder
+```
+
+React 19, Vite, Astryx neutral theme, Tailwind CSS v4를 사용합니다. 프로덕션 빌드는 `npm run build:builder`로 생성합니다.

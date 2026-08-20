@@ -1,0 +1,14 @@
+{
+  "name": "little-wonder",
+  "private": true,
+  "type": "module",
+  "workspaces": ["wiki", "builder"],
+  "scripts": {
+    "dev:wiki": "npm run dev -w wiki",
+    "dev:builder": "npm run dev -w builder",
+    "build": "npm run build -w wiki && npm run build -w builder",
+    "build:wiki": "npm run build -w wiki",
+    "build:builder": "npm run build -w builder",
+    "lint": "npm run lint -w wiki && npm run lint -w builder"
+  }
+}

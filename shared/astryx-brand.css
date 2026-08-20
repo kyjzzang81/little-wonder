@@ -1,0 +1,28 @@
+@layer astryx-theme {
+  [data-astryx-theme="neutral"] {
+    --color-accent: #1769e0;
+    --color-accent-hover: #0f56c2;
+    --color-background-body: #f7f8fa;
+    --color-background-surface: #ffffff;
+    --color-background-card: #ffffff;
+    --color-text-primary: #172033;
+    --color-text-secondary: #687386;
+    --color-border: #dfe3e8;
+    --color-border-emphasized: #bcc4cf;
+    --radius-inner: 8px;
+    --radius-element: 12px;
+    --radius-container: 18px;
+    --lw-blue: #1769e0;
+    --lw-yellow: #f5bd18;
+    --lw-red: #d92d3a;
+  }
+}
+
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: Figtree, Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+button, input, textarea, select { font: inherit; }
+::selection { color: #172033; background: #ffe58a; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}
