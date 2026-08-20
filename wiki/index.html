@@ -32,7 +32,7 @@
         linear-gradient(90deg, rgba(1,103,211,.025) 1px, transparent 1px),
         var(--paper);
       background-size: auto, 32px 32px, auto;
-      font-family: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+      font-family: Helvetica, Arial, Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
       line-height: 1.75;
       word-break: keep-all;
     }
@@ -62,7 +62,7 @@
       align-items: center;
       gap: 10px;
       margin-right: auto;
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: .02em;
       white-space: nowrap;
     }
@@ -76,7 +76,7 @@
       background: var(--orange);
       border-radius: 50% 48% 45% 54%;
       transform: rotate(-5deg);
-      font-family: Georgia, serif;
+      font-family: Helvetica, Arial, Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
       font-size: 20px;
     }
 
@@ -104,7 +104,7 @@
       background: transparent;
     }
     .toolbar button:hover { background: rgba(255,255,255,.1); }
-    .toolbar .primary { color: #132a42; background: var(--orange); border-color: var(--orange); font-weight: 750; }
+    .toolbar .primary { color: #132a42; background: var(--orange); border-color: var(--orange); font-weight: 700; }
     .toolbar .research-link { color: white; text-decoration: none; display: inline-flex; align-items: center; min-height: 39px; padding: 7px 12px; border: 1px solid rgba(255,255,255,.22); border-radius: 9px; }
     .toolbar .research-link:hover { background: rgba(255,255,255,.1); }
     #saveStatus { min-width: 70px; align-self: center; color: #d8e6de; font-size: 12px; text-align: center; }
@@ -119,7 +119,7 @@
     }
 
     .side, .aside { position: sticky; top: 92px; align-self: start; max-height: calc(100vh - 115px); overflow: auto; }
-    .side-label, .aside-label { margin-bottom: 13px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .13em; }
+    .side-label, .aside-label { margin-bottom: 13px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .13em; }
     .side nav { display: grid; gap: 4px; }
     .side a {
       padding: 8px 12px;
@@ -147,12 +147,12 @@
       right: 28px;
       bottom: -78px;
       color: rgba(255,255,255,.075);
-      font-family: Georgia, serif;
+      font-family: Helvetica, Arial, Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
       font-size: 280px;
       line-height: 1;
     }
-    .eyebrow { color: #efc474; font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
-    h1 { position: relative; z-index: 1; margin: 12px 0 15px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(45px, 6vw, 76px); line-height: .98; letter-spacing: -.04em; }
+    .eyebrow { color: #efc474; font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+    h1 { position: relative; z-index: 1; margin: 12px 0 15px; font-family: Helvetica, Arial, Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; font-size: clamp(45px, 6vw, 76px); line-height: .98; letter-spacing: -.04em; }
     .hero p { position: relative; z-index: 1; max-width: 640px; margin: 0; color: #dce8df; font-size: 18px; }
     .hero .summary { margin-top: 27px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.19); color: white; font-size: 21px; font-weight: 650; }
 
@@ -162,8 +162,8 @@
       padding-bottom: 22px;
       border-bottom: 1px solid var(--line);
     }
-    .chapter-number { display: inline-block; margin-bottom: 9px; color: var(--orange); font-family: Georgia, serif; font-size: 14px; font-weight: bold; }
-    h2 { margin: 0 0 19px; font-family: Georgia, "Noto Serif KR", serif; font-size: clamp(29px, 4vw, 42px); line-height: 1.25; letter-spacing: -.035em; }
+    .chapter-number { display: inline-block; margin-bottom: 9px; color: var(--orange); font-family: Helvetica, Arial, Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; font-size: 14px; font-weight: bold; }
+    h2 { margin: 0 0 19px; font-family: Helvetica, Arial, Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; font-size: clamp(29px, 4vw, 42px); line-height: 1.25; letter-spacing: -.035em; }
     h3 { margin: 32px 0 11px; color: var(--green); font-size: 20px; line-height: 1.45; }
     p { margin: 0 0 17px; }
     ul, ol { padding-left: 22px; }
@@ -210,6 +210,11 @@
     .aside-card { margin-bottom: 14px; padding: 16px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.48); }
     .aside-card b { display: block; margin-bottom: 8px; color: var(--green); font-size: 13px; }
     .aside-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .history-list { display: grid; gap: 13px; margin: 22px 0; }
+    .history-entry { display: grid; grid-template-columns: 112px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .history-date { color: var(--blue); font-size: 13px; font-weight: 700; }
+    .history-entry b { display: block; margin-bottom: 4px; color: var(--green); }
+    .history-entry p { margin: 0; color: #526058; font-size: 14px; }
 
     .editable[contenteditable="true"] {
       outline: 2px dashed rgba(243,184,6,.62);
@@ -271,6 +276,8 @@
     <span id="saveStatus">저장됨</span>
     <div class="toolbar">
       <a class="research-link" href="research/index.html">자료 라이브러리</a>
+      <a class="research-link" href="../builder/index.html">Adventure Builder</a>
+      <button id="historyBtn" title="오늘의 변경 요약을 업데이트 기록에 추가">변경 기록</button>
       <button id="exportBtn" title="현재 내용을 새 HTML 파일로 저장">내보내기</button>
       <button id="resetBtn" title="처음 문서로 되돌리기">초기화</button>
       <button id="editBtn" class="primary">편집하기</button>
@@ -289,8 +296,10 @@
         <a href="#product">제품과 사업 구조</a>
         <a href="#competition">경쟁과 차별화</a>
         <a href="#system">핵심 자산과 시스템</a>
+        <a href="#mvp">초기 MVP 전략</a>
         <a href="#validation">검증할 가설</a>
         <a href="#glossary">용어집</a>
+        <a href="#changelog">업데이트 기록</a>
       </nav>
       <div class="side-note">상단의 <b>편집하기</b>를 누르면 본문을 직접 수정할 수 있습니다. 수정 내용은 이 브라우저에 자동 저장됩니다.</div>
     </aside>
@@ -306,8 +315,10 @@
         <option value="#product">제품과 사업 구조</option>
         <option value="#competition">경쟁과 차별화</option>
         <option value="#system">핵심 자산과 시스템</option>
+        <option value="#mvp">초기 MVP 전략</option>
         <option value="#validation">검증할 가설</option>
         <option value="#glossary">용어집</option>
+        <option value="#changelog">업데이트 기록</option>
       </select>
 
       <section class="hero editable">
@@ -490,7 +501,7 @@
             <div class="card"><b>Passport & Badge</b><p>여러 채널의 경험을 연결하고 반복 참여의 이유를 만드는 공통 기록 체계.</p></div>
           </div>
           <h3>Little Wonder Adventure Builder</h3>
-          <p>Big Question, 현상, 장소 또는 사물에서 출발해 기획자를 단계별로 안내하고, 리틀원더 철학에 맞는지 자동 검수하며, 현장 테스트 결과까지 관리하는 내부 제작 도구다.</p>
+          <p>Big Question, 현상, 장소 또는 사물에서 출발해 기획자를 단계별로 안내하고, 리틀원더 철학에 맞는지 자동 검수하며, 현장 테스트 결과까지 관리하는 <strong>LLM 연결형 내부 반응형 웹앱</strong>이다. 단순 문서 템플릿이 아니라 콘텐츠의 품질·다양성·학습을 관리하는 제작 엔진이다.</p>
           <div class="flow"><span>IDEA</span><i>→</i><span>FIT CHECK</span><i>→</i><span>ARCHETYPE</span><i>→</i><span>JOURNEY</span><i>→</i><span>BRANCH</span><i>→</i><span>QUALITY</span><i>→</i><span>FIELD TEST</span><i>→</i><span>PUBLISH</span></div>
           <h3>Builder가 확인해야 할 것</h3>
           <ul>
@@ -504,16 +515,69 @@
             <li>현장에서 안전하고 현실적으로 운영 가능한가?</li>
           </ul>
           <h3>AI의 적절한 역할</h3>
-          <p>AI는 Adventure를 전부 대신 만드는 작가보다 Critic, Suggestor, Red Team, 예상 발화·분기 생성기, 연령·채널 변환기로 사용한다. 콘텐츠의 독창성과 현장성에 대한 최종 판단은 사람과 실제 아이의 테스트가 맡는다.</p>
+          <p>AI는 Adventure를 전부 대신 만드는 작가보다 Critic, Suggestor, Red Team, 예상 발화·분기 생성기, 연령·채널 변환기로 사용한다. 특히 기존 Adventure와의 구조적 유사성, Archetype 편중, 핵심 행동의 중복을 감지해 콘텐츠가 모두 비슷해지는 것을 막는다. 콘텐츠의 독창성과 현장성에 대한 최종 판단은 사람과 실제 아이의 테스트가 맡는다.</p>
+        </section>
+
+        <section class="chapter editable" id="mvp">
+          <span class="chapter-number">09</span>
+          <h2>초기 MVP 전략</h2>
+          <p class="lead">초기에는 인스타그램, Little Wonder Builder, 첫 Adventure Pack이 서로를 검증하는 하나의 루프가 되어야 한다. 인스타그램은 부모의 문제 공감과 신청 의향을, Builder는 콘텐츠 품질과 다양성을, Pack은 아이의 실제 경험과 부모의 지불의사를 확인한다.</p>
+          <div class="flow"><span>Instagram</span><i>→</i><span>베타 신청</span><i>→</i><span>Adventure Pack</span><i>→</i><span>가족 테스트</span><i>→</i><span>Builder 학습</span><i>→</i><span>다음 콘텐츠</span></div>
+          <h3>초기 타깃</h3>
+          <div class="callout green"><strong>첫 검증 대상: 만 5~6세, 유치원 고학년 아이와 부모</strong><br />이 연령은 글을 읽지 않아도 부모와 카드로 Adventure를 운영할 수 있고, 아이가 질문·비교·간단한 가설·재시도를 말이나 그림으로 표현할 수 있다. 초기에는 연령을 넓히지 않고 이 한 집단의 경험을 정교하게 만든다.</div>
+          <h3>인스타그램의 역할 — 홍보보다 가설 검증</h3>
+          <div class="cards">
+            <div class="card"><b>문제 공감형</b><p>아이의 시간이 구조화되는 현실과 부모가 느끼는 고민을 언어화한다.</p></div>
+            <div class="card"><b>부모 행동형</b><p>“오늘 공원에서 이 질문 하나만 해보세요”처럼 바로 해볼 수 있는 작은 행동을 제안한다.</p></div>
+            <div class="card"><b>실제 증거형</b><p>아이의 선택, 질문, 수정과 부모의 발견을 익명화된 이야기로 보여준다.</p></div>
+            <div class="card"><b>하나의 CTA</b><p>모든 콘텐츠는 무료 Adventure 수령·첫 20가족 테스트 신청·사전 알림 중 하나로 연결한다.</p></div>
+          </div>
+          <p>좋아요나 조회수만으로 수요를 판단하지 않는다. 베타 신청률, 실제 실행률, 다음 Adventure 의향, 유료 사전구매 의향을 본다.</p>
+          <h3>Little Wonder Builder v1</h3>
+          <p>Builder는 초기부터 개발하되, 외부 고객용 제품이 아닌 내부 제작 도구로 한정한다. 첫 버전의 목적은 Adventure를 많이 생산하는 것이 아니라 한 사람이 만든 콘텐츠도 일관되고 서로 다르게 만드는 것이다.</p>
+          <table>
+            <thead><tr><th>기능</th><th>Builder가 해야 할 일</th></tr></thead>
+            <tbody>
+              <tr><td>Adventure Seed</td><td>장소·현상·질문·사물·문제상황과 타깃 연령을 입력한다.</td></tr>
+              <tr><td>Fit Check</td><td>선택권, 열린 질문, 현실세계 관찰, 실패·수정 가능성, 아이 발화 기록을 점검한다.</td></tr>
+              <tr><td>Thinking Journey</td><td>발견 → 선택 → 질문 → 예상 → 시도 → 예상 밖 결과 → 수정 → 성찰의 사고 흐름을 설계한다.</td></tr>
+              <tr><td>AI Design Critic</td><td>“아이가 실제로 결정하는 것은 무엇인가?” “정답 찾기 구조가 아닌가?”를 비판적으로 묻는다.</td></tr>
+              <tr><td>Similarity Check</td><td>기존 콘텐츠와의 구조·장소·핵심 행동 중복을 감지하고, 비어 있는 Archetype을 추천한다.</td></tr>
+              <tr><td>Field Test Log</td><td>아이의 선택·질문·재시도와 부모의 Wow Moment를 기록해 다음 설계에 반영한다.</td></tr>
+            </tbody>
+          </table>
+          <h3>첫 Adventure Pack — 대표 체험판</h3>
+          <p>첫 Pack은 가벼운 최소기능 제품이지만, 리틀원더가 무엇인지 가장 정확하게 느끼게 하는 대표작이어야 한다. 재료를 많이 넣은 만들기 키트가 아니라, 부모와 아이가 현실세계를 다르게 경험하게 하는 <strong>Adventure Pack</strong>으로 설계한다.</p>
+          <div class="cards">
+            <div class="card"><b>아이용</b><p>짧은 Briefing, Mission Cards, Explorer Passport, Wonder Log, 자유탐험 안내.</p></div>
+            <div class="card"><b>부모용</b><p>20초 Guide, 관찰 포인트, 개입하지 말아야 할 순간, 안전과 기록 안내.</p></div>
+            <div class="card"><b>경험 기준</b><p>선택 2회 이상, 아이의 질문 1개, 자기 생각 표현, 시도 또는 재시도, 아직 남은 궁금증.</p></div>
+            <div class="card"><b>화면 원칙</b><p>앱은 필수가 아니다. 필요한 경우 QR 기반의 짧은 모바일 가이드로만 현실세계 탐색을 돕는다.</p></div>
+          </div>
+          <h3>체험 가족과 후기 수집</h3>
+          <p>모든 체험 가족에게는 비공개 설문과 짧은 인터뷰를 요청해 제품 개선 데이터를 얻는다. SNS 후기와 리틀원더 계정 태그는 선택 참여로 운영하고, 다음 Adventure 우선 체험이나 소액 혜택을 제공한다. 아이의 얼굴·이름·위치 노출 없이 손, 결과물, 뒷모습, Wonder Question만 공유할 수 있는 후기 템플릿을 제공한다.</p>
+          <div class="callout"><strong>후기에서 듣고 싶은 것</strong><br />“오늘 아이가 가장 오래 멈춰 본 것은?” “직접 만든 질문은?” “예상과 달라 다시 해본 순간은?” “부모가 새롭게 발견한 아이의 모습은?”</div>
+          <h3>8주 검증 순서</h3>
+          <table>
+            <thead><tr><th>기간</th><th>집중할 산출물</th><th>확인할 신호</th></tr></thead>
+            <tbody>
+              <tr><td>1~2주</td><td>인스타그램 12~15개, 랜딩페이지, Builder v1의 핵심 흐름</td><td>첫 20~30가족의 베타 신청</td></tr>
+              <tr><td>3~4주</td><td>첫 Adventure Pack과 10가족 테스트</td><td>실제 실행, 아이의 선택·질문, 부모의 이해</td></tr>
+              <tr><td>5~6주</td><td>Pack 2·3호, 후기·인터뷰 분석, Builder 기준 보정</td><td>재실행 의향과 콘텐츠 품질의 일관성</td></tr>
+              <tr><td>7~8주</td><td>유료 사전판매 또는 소규모 판매</td><td>부모의 실제 지불의사와 다음 제품의 병목</td></tr>
+            </tbody>
+          </table>
         </section>
 
         <section class="chapter editable" id="validation">
-          <span class="chapter-number">09</span>
+          <span class="chapter-number">10</span>
           <h2>아직 검증할 가설</h2>
           <p class="lead">철학과 전략은 가설이다. 실제 아이의 행동, 부모의 반복 지불, 운영자의 실행 가능성으로 확인되어야 한다.</p>
           <div class="cards">
             <div class="card"><b>부모 수요</b><p>부모는 ‘호기심’이라는 추상적 가치가 아니라 정기적인 Explorer Journey에 반복 지불하는가?</p></div>
             <div class="card"><b>아이 경험</b><p>활동이 자발적 발견·질문·선택·재시도를 실제로 더 많이 일으키는가?</p></div>
+            <div class="card"><b>첫 Pack</b><p>첫 경험만으로 부모가 아이의 새로운 모습을 발견하고 다음 Adventure를 원하게 되는가?</p></div>
+            <div class="card"><b>Builder 품질</b><p>LLM Critic과 Similarity Check가 콘텐츠의 중복을 줄이고 Quality Gate를 높이는가?</p></div>
             <div class="card"><b>Club 단위경제</b><p>적정 정원, 회차, 가격, 장소 이동 범위와 Leader 운영 모델은 무엇인가?</p></div>
             <div class="card"><b>기관 실행성</b><p>외부 강사가 아닌 교사와 시설 운영자도 품질을 유지하며 실행할 수 있는가?</p></div>
             <div class="card"><b>성장 체계</b><p>Explorer 단계와 배지가 아이에게는 즐겁고 부모에게는 납득 가능하며 과도한 평가가 되지 않는가?</p></div>
@@ -525,7 +589,7 @@
         </section>
 
         <section class="chapter editable" id="glossary">
-          <span class="chapter-number">10</span>
+          <span class="chapter-number">11</span>
           <h2>용어집</h2>
           <table>
             <tbody>
@@ -536,9 +600,31 @@
               <tr><th>Guide</th><td>가르치기보다 계기를 제공하고 관찰하고 질문한 뒤 물러나는 사람 또는 앱.</td></tr>
               <tr><th>Growth Story</th><td>점수나 진단 대신 아이의 관찰된 행동과 생각의 변화를 부모에게 보여주는 기록.</td></tr>
               <tr><th>Adventure Builder</th><td>리틀원더다운 콘텐츠를 설계·검수·테스트·개선하기 위한 내부 제작 시스템.</td></tr>
+              <tr><th>Adventure Pack</th><td>아이와 부모가 현실세계에서 Little Wonder Loop를 직접 경험하는 대표 체험판. 단순 만들기 키트가 아니다.</td></tr>
               <tr><th>Productized Curriculum</th><td>기관별 일회성 외주가 아니라 반복 도입 가능한 표준화된 교육 IP.</td></tr>
             </tbody>
           </table>
+        </section>
+
+        <section class="chapter editable" id="changelog">
+          <span class="chapter-number">12</span>
+          <h2>업데이트 기록</h2>
+          <p class="lead">리틀원더는 검증을 통해 달라지는 살아 있는 전략이다. 무엇을 바꾸었는지뿐 아니라, 왜 바꾸었는지를 함께 기록한다.</p>
+          <div class="history-list">
+            <div class="history-entry">
+              <div class="history-date">2026.08.18</div>
+              <div><b>Builder 입력별 AI Assist 추가</b><p>Big Question, 첫 Trigger, 아이의 선택과 재시도, Thinking Journey, Parent Wow 및 Evidence에 대해 맥락 기반 제안을 검토하고 적용할 수 있게 했다. 실제 LLM API가 연결되면 같은 흐름에서 서버 응답을 우선 사용한다.</p></div>
+            </div>
+            <div class="history-entry">
+              <div class="history-date">2026.08.18</div>
+              <div><b>초기 MVP와 Builder 방향 구체화</b><p>인스타그램을 부모 수요 검증 채널로, LLM 연결형 Little Wonder Builder를 내부 콘텐츠 품질·다양성 관리 웹앱으로 정의했다. 첫 Adventure Pack은 만 5~6세 유치원 고학년 아이와 부모를 위한 대표 체험판으로 설정했고, 비공개 테스트 피드백과 선택형 SNS 후기를 분리했다.</p></div>
+            </div>
+            <div class="history-entry">
+              <div class="history-date">2026.08.17</div>
+              <div><b>리틀원더 위키와 자료 라이브러리 개설</b><p>문제 정의, Adventure Education 철학, Explorer Journey, 사업 구조, 연구 라이브러리를 정리했다.</p></div>
+            </div>
+          </div>
+          <p class="small">상단의 ‘변경 기록’ 버튼을 누르면 오늘 날짜와 변경 요약을 이 목록에 추가할 수 있습니다. 중요한 의사결정에는 바뀐 내용과 판단 근거를 함께 남깁니다.</p>
         </section>
       </article>
 
@@ -553,6 +639,7 @@
       <div class="aside-card"><b>ONE LINE</b><p>아이를 Explorer로 만드는 Adventure Education Company</p></div>
       <div class="aside-card"><b>CORE PROBLEM</b><p>자기주도적 현실세계 경험의 공백</p></div>
       <div class="aside-card"><b>HERO PRODUCT</b><p>Little Wonder Explorer Club</p></div>
+      <div class="aside-card"><b>INITIAL MVP</b><p>Instagram + Builder + First Adventure Pack</p></div>
       <div class="aside-card"><b>CORE LOOP</b><p>Discover → Choose → Wonder → Try → Challenge → Reflect</p></div>
       <div class="aside-card"><b>MOAT</b><p>Design System + Growth Framework + IP Library + Passport</p></div>
     </aside>
@@ -560,12 +647,13 @@
 
   <script>
     (() => {
-      const STORAGE_KEY = 'little-wonder-wiki-v1';
+      const STORAGE_KEY = 'little-wonder-wiki-v2';
       const content = document.getElementById('wikiContent');
       const editables = [...document.querySelectorAll('.editable')];
       const editBtn = document.getElementById('editBtn');
       const exportBtn = document.getElementById('exportBtn');
       const resetBtn = document.getElementById('resetBtn');
+      const historyBtn = document.getElementById('historyBtn');
       const saveStatus = document.getElementById('saveStatus');
       const searchInput = document.getElementById('searchInput');
       const searchEmpty = document.getElementById('searchEmpty');
@@ -608,6 +696,21 @@
         original.forEach((html, i) => editables[i].innerHTML = html);
         localStorage.removeItem(STORAGE_KEY);
         saveStatus.textContent = '초기화됨';
+      });
+
+      historyBtn.addEventListener('click', () => {
+        const summary = prompt('오늘 변경한 내용과 판단 근거를 짧게 기록하세요.');
+        if (!summary?.trim()) return;
+        const now = new Date();
+        const date = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+        const entry = document.createElement('div');
+        entry.className = 'history-entry';
+        entry.innerHTML = `<div class="history-date">${date}</div><div><b>사용자 업데이트</b><p></p></div>`;
+        entry.querySelector('p').textContent = summary.trim();
+        document.querySelector('#changelog .history-list').prepend(entry);
+        save();
+        document.querySelector('#changelog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        saveStatus.textContent = '기록 추가됨';
       });
 
       exportBtn.addEventListener('click', () => {
